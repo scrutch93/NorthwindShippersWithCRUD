@@ -24,11 +24,10 @@ public class mainApp {
         NorthwindDataManager dataManager = new NorthwindDataManager(dataSource);
 
         System.out.println("Welcome to Northwind Shippers!");
-        PromptUserToAddShipper(dataManager);
 
-        System.out.println("---------------");
 
-        System.out.println(dataManager.getAllShippers());
+        PromptUserToEditPhone(dataManager);
+
 
     }
 
@@ -47,9 +46,22 @@ public class mainApp {
         } else {
             System.out.println("Invalid phone number. Please enter in the format (XXX) XXX-XXXX.");
         }
-
         dataManager.addShipper(name, phone);
 
+    }
+
+    public static void PromptUserToEditPhone(NorthwindDataManager dataManager) throws SQLException {
+        System.out.println("You have opted to update a pre-existing phone number.");
+
+        System.out.println("Please enter shipper ID: ");
+        int shipperId = input.nextInt();
+
+        input.nextLine();
+
+        System.out.println("Please enter new phone: ");
+        String phone = input.nextLine();
+
+        dataManager.editPhone(shipperId,phone);
 
     }
 

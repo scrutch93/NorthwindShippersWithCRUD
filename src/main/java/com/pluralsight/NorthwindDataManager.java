@@ -42,12 +42,38 @@ public class NorthwindDataManager {
         }
     }
 
-    public void editPhone(int shipperId, String phone){
+    public void editPhone(int shipperId, String phone) throws SQLException {
 
+        String update = "UPDATE shippers " +
+                "SET Phone = ? " +
+                "WHERE ShipperID = ? ";
 
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(update)) {
 
+            preparedStatement.setString(1, phone);
+            preparedStatement.setInt(2, shipperId);
 
+            int rows = preparedStatement.executeUpdate();
+
+            System.out.printf("Rows updated %d\n", rows);
+
+            // If the update was successful, fetch and display the updated phone number
+            if (rows > 0) {
+                String selectQuery = "SELECT Phone FROM shippers WHERE ShipperID = ?";
+                try (PreparedStatement selectStatement = connection.prepareStatement(selectQuery)) {
+                    selectStatement.setInt(1, shipperId);
+                    ResultSet resultSet = selectStatement.executeQuery();
+                    if (resultSet.next()) {
+                        String updatedPhoneNumber = resultSet.getString("Phone");
+                        System.out.println("Updated Phone Number: " + updatedPhoneNumber);
+                    }
+                }
+            }
+
+        }
     }
+
 
 
 
