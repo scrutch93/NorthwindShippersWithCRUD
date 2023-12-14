@@ -74,7 +74,21 @@ public class NorthwindDataManager {
         }
     }
 
+    public void deleteShipper(int shipperId) throws SQLException {
 
+        String delete = "DELETE FROM shippers WHERE ShipperID = ?";
+
+        try(Connection connection = dataSource.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(delete)){
+
+            preparedStatement.setInt(1, shipperId);
+
+            int rows = preparedStatement.executeUpdate();
+
+            System.out.printf("Rows deleted %d\n", rows);
+        }
+
+    }
 
 
 

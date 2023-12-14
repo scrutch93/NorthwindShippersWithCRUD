@@ -26,8 +26,22 @@ public class mainApp {
         System.out.println("Welcome to Northwind Shippers!");
 
 
-        PromptUserToEditPhone(dataManager);
+        System.out.println("What would you like to do?");
+        System.out.println(" 1) add new shipper");
+        System.out.println(" 2) update shipper phone number");
+        System.out.println(" 3) remove/delete shipper");
+        int selection = input.nextInt();
 
+        switch(selection){
+            case 1:
+                PromptUserToAddShipper(dataManager);
+            case 2:
+                PromptUserToEditPhone(dataManager);
+            case 3:
+                PromptUserToDeleteShipper(dataManager);
+            default:
+                System.out.println("Not a valid selection.");
+        }
 
     }
 
@@ -65,6 +79,13 @@ public class mainApp {
 
     }
 
+    public static void PromptUserToDeleteShipper(NorthwindDataManager dataManager) throws SQLException {
+        System.out.println("You have opted to delete a shipper.");
+        System.out.println("Enter ID of shipper you would like to delete.");
+        int shipperId = input.nextInt();
+
+        dataManager.deleteShipper(shipperId);
+    }
 
 
 
